@@ -1,0 +1,9 @@
+{
+  "webPort": "9001",
+  "dbDatabase" : "1078",
+  "dbHost" : "146.185.130.82",
+  "dbPort" : "3306",
+  "dbUser" : "1078",
+  "dbPassword" : "secret",
+  "secretkey" : "Dit is de complexe key van ons tentamenproject"
+}
