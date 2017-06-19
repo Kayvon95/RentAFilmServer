@@ -15,7 +15,7 @@ router.get('/test', function(req, res){
 //Endpoint voor de registratie van nieuwe gebruikers/klanten
 router.post('/register', function (req, res){
     var customer = {
-        customer_id: req.body.customer_id,
+        customer_id: null,
         email: req.body.email,
         active: req.body.active,
         create_date: req.body.create_date,
