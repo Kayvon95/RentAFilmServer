@@ -7,7 +7,6 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../db/db_connector');
 
-
 //Test
 router.get('/test', function(req, res){
     res.send('Testresults.');
@@ -17,11 +16,7 @@ router.get('/test', function(req, res){
 router.post('/register', function (req, res){
     var customer = {
         customer_id: req.body.customer_id,
-        store_id: req.body.store_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
         email: req.body.email,
-        address_id: req.body.address_id,
         active: req.body.active,
         create_date: req.body.create_date,
         last_update: req.body.last_update,
@@ -30,11 +25,7 @@ router.post('/register', function (req, res){
 
     var query_str = "INSERT INTO customer VALUES ('" +
         customer.customer_id + "', '" +
-        customer.store_id + "', '" +
-        customer.first_name + "', '" +
-        customer.last_name + "', '" +
         customer.email + "', '" +
-        customer.address_id + "', '" +
         customer.active + "', '" +
         customer.create_date+ "', '" +
         customer.last_update + "', '" +
