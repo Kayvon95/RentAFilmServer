@@ -7,7 +7,6 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../db/db_connector');
 
-
 //Test
 router.get('/test', function(req, res){
     res.send('Testresults.');
@@ -17,11 +16,7 @@ router.get('/test', function(req, res){
 router.post('/register', function (req, res){
     var customer = {
         customer_id: req.body.customer_id,
-        store_id: req.body.store_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
         email: req.body.email,
-        address_id: req.body.address_id,
         active: req.body.active,
         create_date: req.body.create_date,
         last_update: req.body.last_update,
@@ -30,11 +25,7 @@ router.post('/register', function (req, res){
 
     var query_str = "INSERT INTO customer VALUES ('" +
         customer.customer_id + "', '" +
-        customer.store_id + "', '" +
-        customer.first_name + "', '" +
-        customer.last_name + "', '" +
         customer.email + "', '" +
-        customer.address_id + "', '" +
         customer.active + "', '" +
         customer.create_date+ "', '" +
         customer.last_update + "', '" +
@@ -119,16 +110,16 @@ router.get('/films/:filmid?', function (req, res){
 });
 
 //Endpoint om alle uitgeleende films van een huurder te bekijken d.m.v. het opgeven van een userID.
-router.get('/rentals/:userid', function(req, res){
-    var userid = req.params.userid;
+router.get('/rentals/:customerid', function(req, res){
+    var customerid = req.params.customerid;
     var query_str;
 
-    if (userid) {
+    if (customerid) {
         query_str = 'SELECT film.film_id FROM film, inventory, rental, customer ' +
                 'WHERE film.film_id = inventory.film_id ' +
                 'AND inventory.inventory_id = rental.inventory_id ' +
                 'AND rental.customer_id = customer.customer_id ' +
-                'AND customer.customer_id = "' + userid + '" ;';
+                'AND customer.customer_id = "' + customerid + '" ;';
 
     } else {
         res.status(404);
@@ -198,6 +189,74 @@ router.post('/inventory/:inventoryid/available/:state', function(req, res){
             }
             res.status(200).json(rows);
         });
+    });
+});
+
+// Endpoint om een nieuwe uitlening te maken voor de gegeven gebruiker van het aangegeven exemplaar
+router.post('/rentals/:customerid/:inventoryid', function (req, res) {
+
+    var customerid = req.params.customerid;
+    var inventoryid = req.params.inventoryid;
+
+    var rental = {
+        rental_id: req.body.rental_id,
+        rental_date: req.body.rental_date,
+        inventory_id: inventoryid,
+        customer_id: customerid,
+        return_date: null,
+        staff_id: req.body.staff_id,
+        last_update: req.body.rental_date,
+    }
+
+    var query_str = "INSERT INTO rental VALUES ('" +
+        rental.rental_id + "', '" +
+        rental.rental_date + "', '" +
+        rental.inventory_id + "', '" +
+        rental.customer_id + "', '" +
+        rental.return_date + "', '" +
+        rental.staff_id + "', '" +
+        rental.last_update + "');";
+
+    console.log(query_str);
+
+
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            throw err
+        }
+        connection.query(query_str, function (err, rows, fields) {
+            connection.release();
+            if (err) {
+                throw err;
+            }
+            res.status(200).json(rows);
+        })
+    });
+
+});
+
+// Wijzig een bestaande uitlening voor gegeven customerid en inventoryid
+router.put('/rentals/:customerid/:inventoryid', function (req, res) {
+
+    var customerid = req.params.customerid;
+    var inventoryid = req.params.inventoryid;
+
+    var returndate = req.body.return_date;
+    var lastupdate = returndate;
+
+    var query = {
+        sql: 'UPDATE `rental` SET return_date=?, last_update=? WHERE customer_id=? AND inventory_id=?',
+        values: [returndate, lastupdate, customerid, inventoryid],
+        timeout: 2000
+    };
+
+    res.contentType('application/json');
+    pool.query(query, function (error, rows, fields) {
+        if (error){
+            res.status(401).json(error);
+        } else {
+            res.status(200).json({ result: rows });
+        };
     });
 });
 
