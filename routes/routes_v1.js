@@ -15,7 +15,7 @@ router.get('/test', function(req, res){
 //Endpoint voor de registratie van nieuwe gebruikers/klanten
 router.post('/register', function (req, res){
     var customer = {
-        customer_id: req.body.customer_id,
+        customer_id: null,
         email: req.body.email,
         active: req.body.active,
         create_date: req.body.create_date,
@@ -104,7 +104,7 @@ router.get('/films/:filmid?', function (req, res){
             if (err) {
                 throw err
             }
-            res.status(200).json(rows);
+            res.status(200).json({"items" :rows});
         })
     });
 });
@@ -205,8 +205,8 @@ router.post('/rentals/:customerid/:inventoryid', function (req, res) {
         customer_id: customerid,
         return_date: null,
         staff_id: req.body.staff_id,
-        last_update: req.body.rental_date,
-    }
+        last_update: req.body.rental_date
+    };
 
     var query_str = "INSERT INTO rental VALUES ('" +
         rental.rental_id + "', '" +
