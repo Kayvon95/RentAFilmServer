@@ -25,6 +25,7 @@ app.use(expressJWT({
         { url: '/api/v1/login', methods: ['POST'] },
         { url: '/api/v1/register', methods: ['POST'] },
         { url: '/api/v1/films?offset=:start&count=:number', methods: ['GET'] },
+        { url: '/api/v1/films/', methods: ['GET'] },
         { url: '/api/v1/films/:filmid', methods: ['GET'] }
     ]
 }));
