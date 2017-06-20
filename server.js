@@ -25,6 +25,7 @@ app.use(expressJWT({
         { url: '/api/v1/login', methods: ['POST'] },
         { url: '/api/v1/register', methods: ['POST'] },
         { url: '/api/v1/films?offset=:start&count=:number', methods: ['GET'] },
+        { url: '/api/v1/films/', methods: ['GET'] },
         { url: '/api/v1/films/:filmid', methods: ['GET'] }
     ]
 }));
@@ -86,7 +87,11 @@ app.listen(port, function () {
 });
 
 
-
+//Endpoint om token op te vragen
+// app.get('/get-token', function(req, res) {
+//     var token = jwt.sign({username: 'kayvon@rahimi-morad.ali'}, {password: "simpel123"});
+//     res.send({token: token});
+// });
 
 
 

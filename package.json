@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kayvon95/RentAFilmServer.git"
+    "url": "git+https://github.com/Kayvon95/RentAFilmServer"
   },
   "author": "Kayvon Rahimi Morad Ali",
   "license": "ISC",
@@ -22,7 +22,8 @@
     "jwt-simple": "^0.5.1",
     "mocha": "^3.4.2",
     "moment": "^2.18.1",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "sinon": "^2.3.5"
   },
   "devDependencies": {
     "chai": "^4.0.2",
