@@ -205,8 +205,8 @@ router.post('/rentals/:customerid/:inventoryid', function (req, res) {
         customer_id: customerid,
         return_date: null,
         staff_id: req.body.staff_id,
-        last_update: req.body.rental_date,
-    }
+        last_update: req.body.rental_date
+    };
 
     var query_str = "INSERT INTO rental VALUES ('" +
         rental.rental_id + "', '" +

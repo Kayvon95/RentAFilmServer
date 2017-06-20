@@ -87,7 +87,11 @@ app.listen(port, function () {
 });
 
 
-
+//Endpoint om token op te vragen
+// app.get('/get-token', function(req, res) {
+//     var token = jwt.sign({username: 'kayvon@rahimi-morad.ali'}, {password: "simpel123"});
+//     res.send({token: token});
+// });
 
 
 
