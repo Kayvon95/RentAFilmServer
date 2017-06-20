@@ -104,7 +104,7 @@ router.get('/films/:filmid?', function (req, res){
             if (err) {
                 throw err
             }
-            res.status(200).json(rows);
+            res.status(200).json({"items" :rows});
         })
     });
 });
